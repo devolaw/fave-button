@@ -240,12 +240,16 @@ extension FaveButton {
             let ring   = Ring.createRing(self, radius: 0.01, lineWidth: 3, fillColor: self.circleFromColor)
             let sparks = createSparks(igniteFromRadius)
             
-            ring.animateToRadius(radius, toColor: circleToColor, duration: Const.expandDuration, delay: 0)
-            ring.animateColapse(radius, duration: Const.collapseDuration, delay: Const.expandDuration)
+            DispatchQueue.main.async { [weak self] in
+                guard let self = self else { return }
+                
+                ring.animateToRadius(radius, toColor: self.circleToColor, duration: Const.expandDuration, delay: 0)
+                ring.animateColapse(radius, duration: Const.collapseDuration, delay: Const.expandDuration)
 
-            sparks.forEach{
-                $0.animateIgniteShow(igniteToRadius, duration:0.4, delay: Const.collapseDuration/3.0)
-                $0.animateIgniteHide(0.7, delay: 0.2)
+                sparks.forEach{
+                    $0.animateIgniteShow(igniteToRadius, duration:0.4, delay: Const.collapseDuration/3.0)
+                    $0.animateIgniteHide(0.7, delay: 0.2)
+                }
             }
         }
     }
