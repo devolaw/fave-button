@@ -30,7 +30,7 @@ class ViewController: UIViewController, FaveButtonDelegate{
         // optional, set default selected fave-buttons with initial
         // startup animation disabled.
         self.heartButton?.setSelected(selected: true, animated: false)
-        
+        self.heartButton?.isToggleEnabled = false
         self.loveButton?.setSelected(selected: true, animated: false)
         self.loveButton?.setSelected(selected: false, animated: false)
     }

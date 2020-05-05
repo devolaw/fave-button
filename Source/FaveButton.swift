@@ -59,6 +59,16 @@ open class FaveButton: UIButton {
     
     @IBOutlet open weak var delegate: AnyObject?
     
+    open var isToggleEnabled: Bool {
+        didSet {
+            if isToggleEnabled {
+                addActions()
+            } else {
+                removeActions()
+            }
+        }
+    }
+    
     fileprivate(set) var sparkGroupCount: Int = 7
     
     fileprivate var faveIconImage:UIImage?
@@ -86,10 +96,12 @@ open class FaveButton: UIButton {
     }
     
     override public init(frame: CGRect) {
+        isToggleEnabled = true
         super.init(frame: frame)
     }
     
     required public init?(coder aDecoder: NSCoder) {
+        isToggleEnabled = true
         super.init(coder: aDecoder)
         applyInit()
     }
@@ -188,6 +200,10 @@ extension FaveButton{
 extension FaveButton{
     func addActions(){
         self.addTarget(self, action: #selector(toggle(_:)), for: .touchUpInside)
+    }
+    
+    func removeActions(){
+        removeTarget(self, action: #selector(toggle(_:)), for: .touchUpInside)
     }
     
     @objc func toggle(_ sender: FaveButton){
